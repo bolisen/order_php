@@ -228,4 +228,7 @@ return [
         'var_page'  => 'page',
         'list_rows' => 15,
     ],
+
+    //默认作者
+    'default_auth'  => 'harry'
 ];
