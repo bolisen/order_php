@@ -2,7 +2,6 @@
 namespace app\order\controller;
 
 use think\Cache;
-use think\Request;
 class Login extends Base
 {
     public function _initialize()

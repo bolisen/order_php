@@ -19,7 +19,7 @@ use think\Config;
  */
 function suc($data ='',$msg='操作成功')
 {
-    $arr['code'] = 1;
+    $arr['code'] = 200;
     $arr['data'] = $data;
     $arr['msg'] = $msg;
     exit(json_encode($arr));
@@ -32,7 +32,7 @@ function suc($data ='',$msg='操作成功')
  */
 function err($msg='操作失败')
 {
-    $arr['code'] = 0;
+    $arr['code'] = 500;
     $arr['msg'] = $msg;
     exit(json_encode($arr));
 }

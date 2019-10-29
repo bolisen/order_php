@@ -9,7 +9,6 @@ header('Access-Control-Allow-Methods:OPTIONS,GET,POST');
 // 响应头设置
 header('Access-Control-Allow-Headers:x-requested-with,content-type,token');
 
-
 class Base extends Controller
 {
     public function _initialize()
