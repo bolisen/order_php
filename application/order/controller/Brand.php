@@ -3,7 +3,6 @@
 
 namespace app\order\controller;
 
-
 class Brand extends Base
 {
     public function _initialize()
