@@ -19,10 +19,28 @@ class Brand extends Base
      */
     public function getList($param){
 
+        //搜索
+        $where = [];
+        if(!empty($param['keyword'])){
+            $where['name'] = ['like',"%".$param['keyword']."%"];
+        }
+
+        if(!empty($param['type'])){
+            $where['type'] = $param['type'];
+        }
+
+        // 排序
+        $order = "";
+        if(!empty($param['sort'])){
+            $order = $param['sort']." ".$param['order'];
+        }
+
         $list = Db("brand")
+            ->where($where)
+            ->order($order)
             ->page($param['pageNum'],$param['pageSize'])
             ->select();
-        $count = Db("brand")->count();
+        $count = Db("brand")->where($where)->count();
         return ['total'=>$count,'rows'=>$list];
     }
 

@@ -108,7 +108,7 @@ class Brand extends Base
         $data = [];
         $param = $this->request->param();
 
-        $param_name = ["keyword", "pageNum", "pageSize"];
+        $param_name = ["keyword", "pageNum", "pageSize",'type','sort','order'];
         foreach ($param_name as $key) {
             if (isset($param[$key])) {
                 $val = $param[$key];
