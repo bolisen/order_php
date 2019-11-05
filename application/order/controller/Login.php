@@ -2,11 +2,12 @@
 namespace app\order\controller;
 
 use think\Cache;
+
 class Login extends Base
 {
     public function _initialize()
     {
-        parent::_initialize();
+        //parent::_initialize();
     }
 
     /**

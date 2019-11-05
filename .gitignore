@@ -4,4 +4,4 @@ composer.lock
 /application/config.php
 /application/database.php
 /public/index.php
-/public/upload
+/public/uploads
