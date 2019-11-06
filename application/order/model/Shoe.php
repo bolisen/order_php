@@ -21,8 +21,8 @@ class Shoe extends Base
             $where['name'] = ['like',"%".$param['keyword']."%"];
         }
 
-        if(!empty($param['type'])){
-            $where['type'] = $param['type'];
+        if(!empty($param['shop_type'])){
+            $where['shop_type'] = $param['shop_type'];
         }
 
         // 排序
@@ -37,9 +37,14 @@ class Shoe extends Base
             ->where($where)
             ->order($order)
             ->page($param['pageNum'],$param['pageSize'])
-            ->field("s.*,b.name as brand_name")
+            ->field("s.*,b.name")
             ->select();
-        $count = Db("shoe")->where($where)->count();
+
+        $count = Db("shoe")
+            ->alias('s')
+            ->join('xy_brand b','s.brand_id = b.id','left')
+            ->where($where)
+            ->count();
         return ['total'=>$count,'rows'=>$list];
     }
 
@@ -83,8 +88,8 @@ class Shoe extends Base
      * @throws \think\exception\PDOException
      */
     public function updateOne($data){
-        $res = ["status" => false, "msg" => "添加失败"];
-        $validate = Loader::validate('Brand');
+        $res = ["status" => false, "msg" => "修改失败"];
+        $validate = Loader::validate('Shoe');
         if(!$validate->check($data)){
             $res['msg'] = $validate->getError();
         }else{

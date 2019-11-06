@@ -25,8 +25,8 @@ class Shoe extends Base
                 $data['rows'][$k]['money'] = round($v['sale_price']-$v['buy_price']-$v['ship_fee'],2);
             }
             // 时间样式调整
-            $data['rows'][$k]['create_time'] = date('Y-m-d H:i:s', $v['create_time']);
-            $data['rows'][$k]['sale_time'] = date('Y-m-d H:i:s', $v['sale_time']);
+            $data['rows'][$k]['sale_time'] = date('Y-m-d', $v['sale_time']);
+            $data['rows'][$k]['create_time'] = date('Y-m-d', $v['create_time']);
         }
         suc($data);
     }
@@ -55,12 +55,6 @@ class Shoe extends Base
         if (empty($id)) err("ID异常！");
 
         $data = $this->model->getOne($id);
-
-        //信息处理
-        if ($data['pic']) {
-            $data['pic'] = APP_URL . $data['pic'];
-        }
-        $data['create_time'] = date('Y-m-d H:i:s', $data['create_time']);
         suc($data);
     }
 
@@ -89,7 +83,7 @@ class Shoe extends Base
         $id = $this->request->post("id");
         if (empty($id)) err("ID异常，无法删除");
 
-        $res = Db('brand')->delete($id);
+        $res = Db('shoe')->delete($id);
         if ($res) {
             suc();
         } else {
@@ -107,7 +101,7 @@ class Shoe extends Base
         $data = [];
         $param = $this->request->param();
 
-        $param_name = ["keyword", "pageNum", "pageSize", 'type', 'sort', 'order'];
+        $param_name = ["keyword", "pageNum", "pageSize", 'sort', 'order','shop_type'];
         foreach ($param_name as $key) {
             if (isset($param[$key])) {
                 $val = $param[$key];
@@ -147,6 +141,11 @@ class Shoe extends Base
                     case 'id':
                         if (!empty($val)) {
                             $data[$key] = $val;
+                        }
+                        break;
+                    case 'sale_time':
+                        if(!empty($val)){
+                            $data[$key] = substr($val,0,strlen($val)-3);
                         }
                         break;
                     default:

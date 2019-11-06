@@ -88,7 +88,7 @@ class Brand extends Base
      * @throws \think\exception\PDOException
      */
     public function updateOne($data){
-        $res = ["status" => false, "msg" => "添加失败"];
+        $res = ["status" => false, "msg" => "修改失败"];
         $validate = Loader::validate('Brand');
         if(!$validate->check($data)){
             $res['msg'] = $validate->getError();

@@ -30,7 +30,7 @@ class Login extends Base
 
         $token = encode_token($user['id']);
         //设置缓存
-        Cache::set("user_" . $token, $user, 3600);
+        Cache::set("user_" . $token, $user, 2*3600);
 
         $data['token'] = $token;
         suc($data, '登录成功');
@@ -52,7 +52,7 @@ class Login extends Base
 
         $user = Cache::get("user_".$token);
 
-        if(!$user)err("用户信息异常，请重新登录！");
+        if(!$user)err("登录已超时，请重新登录！");
 
         $user['roles'] = [
             'admin',
