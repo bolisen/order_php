@@ -20,9 +20,13 @@ class Shoe extends Base
 
         // 数据处理
         foreach ($data['rows'] as $k => $v) {
-           $data['rows'][$k]['brand_name'] = $this->model->brand();
+            if($v['sale_price'] && floatval($v['sale_price']) !== 0.00){
+                // 盈亏显示处理
+                $data['rows'][$k]['money'] = round($v['sale_price']-$v['buy_price']-$v['ship_fee'],2);
+            }
             // 时间样式调整
             $data['rows'][$k]['create_time'] = date('Y-m-d H:i:s', $v['create_time']);
+            $data['rows'][$k]['sale_time'] = date('Y-m-d H:i:s', $v['sale_time']);
         }
         suc($data);
     }

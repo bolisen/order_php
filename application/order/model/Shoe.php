@@ -5,11 +5,6 @@ use think\Loader;
 class Shoe extends Base
 {
 
-    public function brand()
-    {
-        return $this->hasOne('Brand','brand_id','id');
-    }
-
     /**
      * 查询列表
      * @param $param
@@ -37,9 +32,12 @@ class Shoe extends Base
         }
 
         $list = Db("shoe")
+            ->alias('s')
+            ->join('xy_brand b','s.brand_id = b.id','left')
             ->where($where)
             ->order($order)
             ->page($param['pageNum'],$param['pageSize'])
+            ->field("s.*,b.name as brand_name")
             ->select();
         $count = Db("shoe")->where($where)->count();
         return ['total'=>$count,'rows'=>$list];
