@@ -25,8 +25,9 @@ class Shoe extends Base
                 $data['rows'][$k]['money'] = round($v['sale_price']-$v['buy_price']-$v['ship_fee'],2);
             }
             // 时间样式调整
-            $data['rows'][$k]['sale_time'] = date('Y-m-d', $v['sale_time']);
-            $data['rows'][$k]['create_time'] = date('Y-m-d', $v['create_time']);
+            if($data['rows'][$k]['sale_time']) {
+                $data['rows'][$k]['sale_time'] = date('Y-m-d', $v['sale_time']);
+            }
         }
         suc($data);
     }
