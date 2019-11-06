@@ -4,6 +4,12 @@ use think\Loader;
 
 class Shoe extends Base
 {
+
+    public function brand()
+    {
+        return $this->hasOne('Brand','brand_id','id');
+    }
+
     /**
      * 查询列表
      * @param $param
@@ -30,12 +36,12 @@ class Shoe extends Base
             $order = $param['sort']." ".$param['order'];
         }
 
-        $list = Db("brand")
+        $list = Db("shoe")
             ->where($where)
             ->order($order)
             ->page($param['pageNum'],$param['pageSize'])
             ->select();
-        $count = Db("brand")->where($where)->count();
+        $count = Db("shoe")->where($where)->count();
         return ['total'=>$count,'rows'=>$list];
     }
 
@@ -46,12 +52,12 @@ class Shoe extends Base
      */
     public function addOne($data){
         $res = ["status" => false, "msg" => "添加失败"];
-        $validate = Loader::validate('Brand');
+        $validate = Loader::validate('Shoe');
         if(!$validate->check($data)){
             $res['msg'] = $validate->getError();
         }else{
             $data['create_time']  = time();
-            if(model("brand")->insert($data)){
+            if(model("shoe")->insert($data)){
                 $res['status'] = true;
                 $res['msg'] = "添加成功";
             }
@@ -68,7 +74,7 @@ class Shoe extends Base
      * @throws \think\exception\DbException
      */
     public function getOne($id) {
-        return model("brand")->where(['id'=>$id])->find();
+        return model("shoe")->where(['id'=>$id])->find();
     }
 
     /**
@@ -84,7 +90,7 @@ class Shoe extends Base
         if(!$validate->check($data)){
             $res['msg'] = $validate->getError();
         }else{
-            if(model("brand")->where(['id'=>$data['id']])->update($data)){
+            if(model("shoe")->where(['id'=>$data['id']])->update($data)){
                 $res['status'] = true;
                 $res['msg'] = "修改成功";
             }

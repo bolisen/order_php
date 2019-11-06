@@ -32,12 +32,19 @@ class Brand extends Base
             $order = $param['sort']." ".$param['order'];
         }
 
-        $list = Db("brand")
-            ->where($where)
-            ->order($order)
-            ->page($param['pageNum'],$param['pageSize'])
-            ->select();
-        $count = Db("brand")->where($where)->count();
+        if(!empty($param['show']) && ($param['show']=='all')){
+            // 获取全部（便于select选择）
+            $list = Db("brand")->select();
+            $count = Db("brand")->count();
+        }else{
+            // 分页查询
+            $list = Db("brand")
+                ->where($where)
+                ->order($order)
+                ->page($param['pageNum'],$param['pageSize'])
+                ->select();
+            $count = Db("brand")->where($where)->count();
+        }
         return ['total'=>$count,'rows'=>$list];
     }
 

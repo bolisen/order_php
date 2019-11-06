@@ -107,7 +107,7 @@ class Brand extends Base
         $data = [];
         $param = $this->request->param();
 
-        $param_name = ["keyword", "pageNum", "pageSize",'type','sort','order'];
+        $param_name = ["keyword", "pageNum", "pageSize",'type','sort','order','show'];
         foreach ($param_name as $key) {
             if (isset($param[$key])) {
                 $val = $param[$key];
@@ -152,6 +152,9 @@ class Brand extends Base
                     case 'pic':
                         if (!empty($val)) {
                             $data[$key] = str_replace(APP_URL, '', $val);
+                        }
+                        if($val == 'null'){
+                            $data[$key] = NULL;
                         }
                         break;
                     default:

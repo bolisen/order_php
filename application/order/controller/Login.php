@@ -52,7 +52,7 @@ class Login extends Base
 
         $user = Cache::get("user_".$token);
 
-        if(count($user) <=0)err("用户信息异常，请重新登录！");
+        if(!$user)err("用户信息异常，请重新登录！");
 
         $user['roles'] = [
             'admin',

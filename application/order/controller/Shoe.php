@@ -20,10 +20,7 @@ class Shoe extends Base
 
         // 数据处理
         foreach ($data['rows'] as $k => $v) {
-            // 图片地址
-            if (!empty($v['pic'])) {
-                $data['rows'][$k]['pic'] = APP_URL . $v['pic'];
-            }
+           $data['rows'][$k]['brand_name'] = $this->model->brand();
             // 时间样式调整
             $data['rows'][$k]['create_time'] = date('Y-m-d H:i:s', $v['create_time']);
         }
@@ -138,7 +135,7 @@ class Shoe extends Base
         $data = [];
         $param = $this->request->post();
 
-        $param_name = ["id", "name", "number", "pic", "type", "remark"];
+        $param_name = ["id", "brand_id", "shop_type", "size", "buy_price", "sale_price","ship_num",'ship_fee','sale_time'];
         foreach ($param_name as $key) {
             if (isset($param[$key])) {
                 $val = $param[$key];
@@ -146,11 +143,6 @@ class Shoe extends Base
                     case 'id':
                         if (!empty($val)) {
                             $data[$key] = $val;
-                        }
-                        break;
-                    case 'pic':
-                        if (!empty($val)) {
-                            $data[$key] = str_replace(APP_URL, '', $val);
                         }
                         break;
                     default:
@@ -161,6 +153,4 @@ class Shoe extends Base
         }
         return $data;
     }
-
-
 }
