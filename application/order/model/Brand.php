@@ -30,6 +30,8 @@ class Brand extends Base
         $order = "";
         if(!empty($param['sort'])){
             $order = $param['sort']." ".$param['order'];
+        }else{
+            $order = 'id desc';
         }
 
         if(!empty($param['show']) && ($param['show']=='all')){

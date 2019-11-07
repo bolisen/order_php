@@ -28,6 +28,7 @@ class Shoe extends Base
             if($data['rows'][$k]['sale_time']) {
                 $data['rows'][$k]['sale_time'] = date('Y-m-d', $v['sale_time']);
             }
+            $data['rows'][$k]['create_time'] = date('Y-m-d', $v['create_time']);
         }
         suc($data);
     }
@@ -146,7 +147,7 @@ class Shoe extends Base
                         break;
                     case 'sale_time':
                         if(!empty($val)){
-                            $data[$key] = substr($val,0,strlen($val)-3);
+                            $data[$key] = $val/1000;
                         }
                         break;
                     default:

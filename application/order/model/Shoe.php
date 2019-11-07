@@ -29,6 +29,8 @@ class Shoe extends Base
         $order = "";
         if(!empty($param['sort'])){
             $order = $param['sort']." ".$param['order'];
+        }else{
+            $order = 'id desc';
         }
 
         $list = Db("shoe")
@@ -93,7 +95,7 @@ class Shoe extends Base
         if(!$validate->check($data)){
             $res['msg'] = $validate->getError();
         }else{
-            if(model("shoe")->where(['id'=>$data['id']])->update($data)){
+            if(model("shoe")->where(['id'=>$data['id']])->update($data) !== false){
                 $res['status'] = true;
                 $res['msg'] = "修改成功";
             }
