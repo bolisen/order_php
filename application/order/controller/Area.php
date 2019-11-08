@@ -2,6 +2,8 @@
 
 namespace app\order\controller;
 
+use think\Cache;
+
 class Area extends Base
 {
     public function _initialize()
@@ -10,19 +12,39 @@ class Area extends Base
     }
 
     /**
-     * 获取全部列表（层级分明）
+     * 获取全部列表（树状）
      */
     public function getList()
     {
-        $arr = model("area")->field('id name')->select();
-        suc($arr);
+        $list = Cache::get("area");
+        if(!$list){
+            $data = db('area')->field('id,name,parent_id as pid')->select();
+            $list = $this->generateCity($data);
+            Cache::set('area',$list);
+        }
+        suc($list);
     }
 
-
-    public function get_array_level($arr)
+    /**
+     * 省市区树
+     * @param $arr
+     * @param $pid
+     * @return array
+     */
+    public function generateCity($arr,$pid=0)
     {
-
-
+        foreach ($arr as $leaf){
+            if($leaf['pid'] == $pid){
+                foreach ($arr as $sub){
+                    if($sub['pid'] == $leaf['id']){
+                        $leaf['children'] = $this->generateCity($arr,$leaf['id']);
+                        break;
+                    }
+                }
+                $return[] = $leaf;
+            }
+        }
+        return $return;
     }
 
 
@@ -33,9 +55,8 @@ class Area extends Base
     public function getOne()
     {
         $parent_id = intval($this->request->param("parent_id"));
-        $type = $this->request->param("type");
         $areaModel = model("Area");
-        $lists = $areaModel->getList($type, $parent_id);
+        $lists = $areaModel->getList($parent_id);
         suc($lists);
 
     }

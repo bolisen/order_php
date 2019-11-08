@@ -1,10 +1,6 @@
 <?php
 
-
 namespace app\order\model;
-
-
-use app\admin\model\BaseModel;
 
 class Area extends Base
 {
@@ -13,21 +9,10 @@ class Area extends Base
      * @param  string $type 标签类别
      * @return [type]       [description]
      */
-    public function getList($type, $parent_id = 0)
+    public function getList($parent_id = 0)
     {
-        switch ($type) {
-            case 'province':
-                # code...
-                break;
-
-            default:
-                if(empty($parent_id)){
-                    return [];
-                }
-                break;
-        }
         $lists = $this
-            ->field("id ,name")
+            ->field("id ,name,parent_id")
             ->where("parent_id",$parent_id)
             ->order("id")
             ->select();
