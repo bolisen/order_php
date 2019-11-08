@@ -35,4 +35,17 @@ class Area extends Base
             ->where('province.parent_id=0')
             ->select();
     }
+
+    /*
+     * 获取某一个省市区信息
+     */
+    public function getName(){
+        return $this
+            ->alias('province')
+            ->join(' xy_area city', 'province.id=city.parent_id')
+            ->join('xy_area county', 'city.id=county.parent_id', 'LEFT')
+            ->field('province.id as province_id, province.name as province_name, city.id as city_id, city.name as city_name, IFNULL(county.id, 0) as county_id, IFNULL(county.name, "") as county_name')
+            ->where('province.parent_id=0')
+            ->select();
+    }
 }

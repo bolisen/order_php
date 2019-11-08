@@ -26,6 +26,12 @@ class Clothe extends Base
                 // 盈亏显示处理
                 $data['rows'][$k]['money'] = round($v['sale_price']-$v['buy_price']-$v['ship_fee'],2);
             }
+            //地址处理
+            if($v['province'] && $v['city'] && $v['area']){
+                $province = model('area')->getName($v['province']);
+
+                $data['rows'][$k]['address'] = model('area')->getName($v['province']).model('area')->getName($v['city'])->model('area')->getName($v['area']).$v['address'];
+            }
             $data['rows'][$k]['create_time'] = date('Y-m-d', $v['create_time']);
         }
         suc($data);
