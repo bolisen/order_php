@@ -1,5 +1,7 @@
 <?php
+
 namespace app\order\model;
+
 use think\Loader;
 
 class Clothe extends Base
@@ -12,37 +14,41 @@ class Clothe extends Base
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
      */
-    public function getList($param){
+    public function getList($param)
+    {
 
         //搜索
         $where = [];
-        if(!empty($param['keyword'])){
-            $where['name'] = ['like',"%".$param['keyword']."%"];
+        if (!empty($param['keyword'])) {
+            $where['name|buy_name|mobile'] = ['like', "%" . $param['keyword'] . "%"];
         }
 
+        if (!empty($param['area'])) {
+            $where['area'] = ['like', $param['area'] . "%"];
+        }
         // 排序
         $order = "";
-        if(!empty($param['sort'])){
-            $order = $param['sort']." ".$param['order'];
-        }else{
+        if (!empty($param['sort'])) {
+            $order = $param['sort'] . " " . $param['order'];
+        } else {
             $order = 'id desc';
         }
 
         $list = Db("clothe")
             ->alias('c')
-            ->join('xy_brand b','c.brand_id = b.id','left')
+            ->join('xy_brand b', 'c.brand_id = b.id', 'left')
             ->where($where)
             ->order($order)
-            ->page($param['pageNum'],$param['pageSize'])
+            ->page($param['pageNum'], $param['pageSize'])
             ->field("c.*,b.name")
             ->select();
 
         $count = Db("clothe")
             ->alias('c')
-            ->join('xy_brand b','c.brand_id = b.id','left')
+            ->join('xy_brand b', 'c.brand_id = b.id', 'left')
             ->where($where)
             ->count();
-        return ['total'=>$count,'rows'=>$list];
+        return ['total' => $count, 'rows' => $list];
     }
 
     /**
@@ -50,14 +56,15 @@ class Clothe extends Base
      * @param $data
      * @return array
      */
-    public function addOne($data){
+    public function addOne($data)
+    {
         $res = ["status" => false, "msg" => "添加失败"];
         $validate = Loader::validate('Clothe');
-        if(!$validate->check($data)){
+        if (!$validate->check($data)) {
             $res['msg'] = $validate->getError();
-        }else{
-            $data['create_time']  = time();
-            if(model("clothe")->insert($data)){
+        } else {
+            $data['create_time'] = time();
+            if (model("clothe")->insert($data)) {
                 $res['status'] = true;
                 $res['msg'] = "添加成功";
             }
@@ -73,8 +80,9 @@ class Clothe extends Base
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
      */
-    public function getOne($id) {
-        return model("clothe")->where(['id'=>$id])->find();
+    public function getOne($id)
+    {
+        return model("clothe")->where(['id' => $id])->find();
     }
 
     /**
@@ -84,13 +92,14 @@ class Clothe extends Base
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
-    public function updateOne($data){
+    public function updateOne($data)
+    {
         $res = ["status" => false, "msg" => "修改失败"];
         $validate = Loader::validate('Clothe');
-        if(!$validate->check($data)){
+        if (!$validate->check($data)) {
             $res['msg'] = $validate->getError();
-        }else{
-            if(model("clohte")->where(['id'=>$data['id']])->update($data) !== false){
+        } else {
+            if (model("Clothe")->where(['id' => $data['id']])->update($data) !== false) {
                 $res['status'] = true;
                 $res['msg'] = "修改成功";
             }
