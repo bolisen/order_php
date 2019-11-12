@@ -22,15 +22,14 @@ class Clothe extends Base
 
         // 数据处理
         foreach ($data['rows'] as $k => $v) {
-            if($v['sale_price'] && floatval($v['sale_price']) !== 0.00){
+            if ($v['sale_price'] && floatval($v['sale_price']) !== 0.00) {
                 // 盈亏显示处理
-                $data['rows'][$k]['money'] = round($v['sale_price']-$v['buy_price']-$v['ship_fee'],2);
+                $data['rows'][$k]['money'] = round($v['sale_price'] - $v['buy_price'] - $v['ship_fee'], 2);
             }
             //地址处理
-            if($v['province'] && $v['city'] && $v['area']){
-                $province = model('area')->getName($v['province']);
-
-                $data['rows'][$k]['address'] = model('area')->getName($v['province']).model('area')->getName($v['city'])->model('area')->getName($v['area']).$v['address'];
+            if ($v['area']) {
+                $area = model('area')->getName($v['area']);
+                $data['rows'][$k]['address'] = $area . $v['address'];
             }
             $data['rows'][$k]['create_time'] = date('Y-m-d', $v['create_time']);
         }
@@ -61,6 +60,15 @@ class Clothe extends Base
         if (empty($id)) err("ID异常！");
 
         $data = $this->model->getOne($id);
+        // 处理收货地址
+        if ($data['area']) {
+            $tempArr = explode(',', $data['area']);
+            $area = [];
+            foreach ($tempArr as $k => $v) {
+                array_push($area, intval($v));
+            }
+            $data['area'] = $area;
+        }
         suc($data);
     }
 
@@ -89,7 +97,7 @@ class Clothe extends Base
         $id = $this->request->post("id");
         if (empty($id)) err("ID异常，无法删除");
 
-        $res = Db('shoe')->delete($id);
+        $res = Db('clothe')->delete($id);
         if ($res) {
             suc();
         } else {
@@ -106,8 +114,7 @@ class Clothe extends Base
     {
         $data = [];
         $param = $this->request->param();
-
-        $param_name = ["keyword", "pageNum", "pageSize", 'sort', 'order'];
+        $param_name = ["keyword", "pageNum", "pageSize", 'sort', 'order', 'area'];
         foreach ($param_name as $key) {
             if (isset($param[$key])) {
                 $val = $param[$key];
@@ -116,6 +123,11 @@ class Clothe extends Base
                         $val = trim($val);
                         if ($val != "") {
                             $data[$key] = $val;
+                        }
+                        break;
+                    case 'area':
+                        if (count($val) > 0) {
+                            $data[$key] = implode(',', $val);
                         }
                         break;
                     default:
@@ -139,7 +151,7 @@ class Clothe extends Base
         $data = [];
         $param = $this->request->post();
 
-        $param_name = ["id", "brand_id","buy_name", "size", "buy_price", "mobile",'address','ship',"sale_price","ship_num",'ship_fee','proCityArea'];
+        $param_name = ["id", "brand_id", "buy_name", "size", "buy_price", "mobile", 'address', 'ship', "sale_price", "ship_num", 'ship_fee', 'area'];
         foreach ($param_name as $key) {
             if (isset($param[$key])) {
                 $val = $param[$key];
@@ -147,14 +159,6 @@ class Clothe extends Base
                     case 'id':
                         if (!empty($val)) {
                             $data[$key] = $val;
-                        }
-                        break;
-                    case 'proCityArea':
-                        if(!empty($val)){
-                            $proCityArea = explode(',',$val);
-                            $data['province'] = $proCityArea[0];
-                            $data['city'] = $proCityArea[1];
-                            $data['area'] = $proCityArea[2];
                         }
                         break;
                     default:
