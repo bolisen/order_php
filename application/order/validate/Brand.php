@@ -13,7 +13,7 @@ class Brand extends Base
     ];
 
     protected $message = [
-        "title.require" => "名称不能为空",
+        "name.require" => "名称不能为空",
         "number.require" => "货号不能为空",
         "type.require" => "类型不能为空"
     ];

@@ -11,8 +11,5 @@ header('Access-Control-Allow-Headers:x-requested-with,content-type,token');
 
 class Base extends Controller
 {
-    public function _initialize()
-    {
 
-    }
 }
