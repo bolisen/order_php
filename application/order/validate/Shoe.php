@@ -16,9 +16,9 @@ class Shoe extends Base
     ];
 
     protected $message = [
-        "title.brand_id" => "所属品牌不能为空",
-        "number.shop_type" => "平台不能为空",
-        "type.size" => "尺码不能为空",
-        "type.buy_price" => "入手价不能为空"
+        "brand_id.require" => "所属品牌不能为空",
+        "shop_type.require" => "平台不能为空",
+        "size.require" => "尺码不能为空",
+        "buy_price.require" => "入手价不能为空"
     ];
 }

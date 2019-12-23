@@ -15,5 +15,7 @@
 define('APP_PATH', __DIR__ . '/../application/');
 //定义访问源
 define('ALLOW_ORIGIN','http://localhost:9527');
+//定义域名
+define('APP_URL','http://www.xy.com');
 // 加载框架引导文件
 require __DIR__ . '/../thinkphp/start.php';
