@@ -58,7 +58,6 @@ class Area extends Base
         $areaModel = model("Area");
         $lists = $areaModel->getList($parent_id);
         suc($lists);
-
     }
 
     /**
