@@ -80,7 +80,6 @@ class Brand extends Base
         }
     }
 
-
     /**
      * 删除
      */
@@ -96,7 +95,6 @@ class Brand extends Base
             err("删除失败！");
         }
     }
-
 
     /**
      * 获取搜索参数

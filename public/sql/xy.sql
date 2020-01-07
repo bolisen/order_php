@@ -5,16 +5,20 @@
 /*!40101 SET NAMES utf8 */;
 
 #
-# 管理员相关
-# Structure for table "xy_admin_user"
+# 管理员/用户相关
+# Structure for table "xy_user"
 #
 
-DROP TABLE IF EXISTS `xy_admin_user`;
-CREATE TABLE `xy_admin_user` (
+DROP TABLE IF EXISTS `xy_user`;
+CREATE TABLE `xy_user` (
   `id`                       int(11)                     NOT NULL                    AUTO_INCREMENT,
   `username`                 varchar(255)                DEFAULT NULL                COMMENT '登录名',
   `password`                 varchar(255)                DEFAULT NULL                COMMENT '密码',
+  `user_type`                int(2)                      DEFAULT NULL                COMMENT '用户类型（1：admin;2：商家；3：用户）',
   `nickname`                 varchar(255)                DEFAULT NULL                COMMENT '昵称',
+  `openid`                   varchar(255)                DEFAULT NULL                COMMENT 'openid',
+  `unionid`                  varchar(255)                DEFAULT NULL                COMMENT 'unid',
+  `sex`                      int(2)                      DEFAULT 0                   COMMENT '性别（0：未知；1：男；2：女；）',
   `avatar`                   varchar(255)                DEFAULT NULL                COMMENT '头像',
   `mobile`                   varchar(255)                DEFAULT NULL                COMMENT '手机号',
   `role_id`                  integer(11)                 DEFAULT NULL                COMMENT '角色id',
@@ -26,7 +30,7 @@ CREATE TABLE `xy_admin_user` (
   `uid`                      int(11)                     DEFAULT NULL                COMMENT '更新人',
   `update_time`              int(11)                     DEFAULT NULL                COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='后台管理员表';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='用户表';
 
 #
 # Structure for table "xy_role"

@@ -88,7 +88,6 @@ class Clothe extends Base
         }
     }
 
-
     /**
      * 删除
      */
@@ -104,7 +103,6 @@ class Clothe extends Base
             err("删除失败！");
         }
     }
-
 
     /**
      * 获取搜索参数
