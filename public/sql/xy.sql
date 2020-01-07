@@ -166,6 +166,25 @@ CREATE TABLE `xy_brand` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='品牌表';
 
+#
+# Structure for table "xy_shop"
+#
+
+DROP TABLE IF EXISTS `xy_shop`;
+CREATE TABLE `xy_shop` (
+  `id`                       int(11)                     NOT NULL                    AUTO_INCREMENT,
+  `user_id`                  int(11)                     DEFAULT NULL                COMMENT '用户id',
+  `pro_id`                   int(11)                     DEFAULT NULL                COMMENT '商品id',
+  `num`                      int(11)                     DEFAULT NULL                COMMENT '商品数量',
+  `remark`                   varchar(255)                DEFAULT NULL                COMMENT '备注',
+  `is_del`                   int(1)                      DEFAULT 0                   COMMENT '是否删除：0-1',
+  `cid`                      int(11)                     DEFAULT NULL                COMMENT '创建人',
+  `create_time`              int(11)                     DEFAULT NULL                COMMENT '创建时间',
+  `uid`                      int(11)                     DEFAULT NULL                COMMENT '更新人',
+  `update_time`              int(11)                     DEFAULT NULL                COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='购物车表';
+
 
 #
 # 订单相关
