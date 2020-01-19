@@ -70,6 +70,7 @@ CREATE TABLE `xy_menu` (
   `is_frame`                 int(11)                     DEFAULT NULL                COMMENT '是否外链：0-1',
   `menu_type`                int(11)                     DEFAULT NULL                COMMENT '菜单类型（1-目录；2-菜单；3-按钮）',
   `perms`                    varchar(255)                DEFAULT NULL                COMMENT '权限标识',
+  `visible`                  int (1)                     DEFAULT 0                   COMMENT '菜单状态',
   `icon`                     varchar(255)                DEFAULT NULL                COMMENT '菜单图表',
   `cid`                      int(11)                     DEFAULT NULL                COMMENT '创建人',
   `create_time`              int(11)                     DEFAULT NULL                COMMENT '创建时间',

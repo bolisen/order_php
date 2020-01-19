@@ -43,7 +43,7 @@ function err($msg='操作失败')
  * @param string $authCode 加密字符串
  * @return string
  */
-function set_password($pw, $authCode = '')
+function set_password($pw, $authCode = null)
 {
     if (empty($authCode)) {
         $authCode = Config::get('default_auth');
